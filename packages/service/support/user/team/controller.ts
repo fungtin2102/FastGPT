@@ -7,6 +7,8 @@ import {
 } from '@fastgpt/global/support/user/team/constant';
 import { MongoTeamMember } from './teamMemberSchema';
 import { MongoTeam } from './teamSchema';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 async function getTeamMember(match: Record<string, any>): Promise<TeamItemType> {
   const tmb = (await MongoTeamMember.findOne(match).populate('teamId')) as TeamMemberWithTeamSchema;
@@ -53,7 +55,7 @@ export async function getUserDefaultTeam({ userId }: { userId: string }) {
 export async function createDefaultTeam({
   userId,
   teamName = 'My Team',
-  avatar = '/icon/logo.svg',
+  avatar = `${publicRuntimeConfig.basePath}/icon/logo.svg`,
   balance,
   session
 }: {

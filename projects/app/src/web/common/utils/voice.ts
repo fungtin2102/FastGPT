@@ -5,6 +5,8 @@ import type { AppTTSConfigType } from '@fastgpt/global/core/module/type.d';
 import { TTSTypeEnum } from '@/constants/app';
 import { useTranslation } from 'next-i18next';
 import type { OutLinkChatAuthProps } from '@fastgpt/global/support/permission/chat.d';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export const useAudioPlay = (props?: OutLinkChatAuthProps & { ttsConfig?: AppTTSConfigType }) => {
   const { t } = useTranslation();
@@ -52,22 +54,25 @@ export const useAudioPlay = (props?: OutLinkChatAuthProps & { ttsConfig?: AppTTS
           audioController.current = new AbortController();
 
           /* request tts */
-          const response = await fetch('/api/core/chat/item/getSpeech', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            signal: audioController.current.signal,
-            body: JSON.stringify({
-              chatItemId,
-              ttsConfig,
-              input: text,
-              shareId,
-              outLinkUid,
-              teamId,
-              teamToken
-            })
-          });
+          const response = await fetch(
+            `${publicRuntimeConfig.basePath}/api/core/chat/item/getSpeech`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              signal: audioController.current.signal,
+              body: JSON.stringify({
+                chatItemId,
+                ttsConfig,
+                input: text,
+                shareId,
+                outLinkUid,
+                teamId,
+                teamToken
+              })
+            }
+          );
           setAudioLoading(false);
 
           if (!response.body || !response.ok) {

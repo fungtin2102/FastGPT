@@ -1,4 +1,7 @@
-export const imageBaseUrl = '/api/system/img/';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+
+export const imageBaseUrl = `${publicRuntimeConfig.basePath}/api/system/img/`;
 
 export enum MongoImageTypeEnum {
   systemAvatar = 'systemAvatar',

@@ -13,6 +13,8 @@ import { clearToken, setToken } from '@/web/support/user/auth';
 import CommunityModal from '@/components/CommunityModal';
 import Script from 'next/script';
 import Loading from '@fastgpt/web/components/common/MyLoading';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const RegisterForm = dynamic(() => import('./components/RegisterForm'));
 const ForgetPasswordForm = dynamic(() => import('./components/ForgetPasswordForm'));
@@ -76,7 +78,7 @@ const Login = () => {
       <Flex
         alignItems={'center'}
         justifyContent={'center'}
-        bg={`url('/icon/login-bg.svg') no-repeat`}
+        bg={`url('${publicRuntimeConfig.basePath}/icon/login-bg.svg') no-repeat`}
         backgroundSize={'cover'}
         userSelect={'none'}
         h={'100%'}

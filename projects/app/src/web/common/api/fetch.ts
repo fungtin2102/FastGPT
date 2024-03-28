@@ -12,6 +12,8 @@ import {
 } from '@fortaine/fetch-event-source';
 import { TeamErrEnum } from '@fastgpt/global/common/error/code/team';
 import { useSystemStore } from '../system/useSystemStore';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 type StreamFetchProps = {
   url?: string;
@@ -26,7 +28,7 @@ type StreamResponseType = {
 class FatalError extends Error {}
 
 export const streamFetch = ({
-  url = '/api/v1/chat/completions',
+  url = `${publicRuntimeConfig.basePath}/api/v1/chat/completions`,
   data,
   onMessage,
   abortCtrl

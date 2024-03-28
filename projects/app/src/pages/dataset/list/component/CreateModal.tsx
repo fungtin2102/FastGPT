@@ -20,6 +20,8 @@ import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants'
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import MySelect from '@fastgpt/web/components/common/MySelect';
 import AIModelSelector from '@/components/Select/AIModelSelector';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const CreateModal = ({ onClose, parentId }: { onClose: () => void; parentId?: string }) => {
   const { t } = useTranslation();
@@ -34,7 +36,7 @@ const CreateModal = ({ onClose, parentId }: { onClose: () => void; parentId?: st
     defaultValues: {
       parentId,
       type: DatasetTypeEnum.dataset,
-      avatar: '/icon/logo.svg',
+      avatar: `${publicRuntimeConfig.basePath}/icon/logo.svg`,
       name: '',
       intro: '',
       vectorModel: filterNotHiddenVectorModelList[0].model,

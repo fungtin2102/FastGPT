@@ -1,4 +1,6 @@
 /* mongo fs bucket */
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 export enum BucketNameEnum {
   dataset = 'dataset'
 }
@@ -8,4 +10,4 @@ export const bucketNameMap = {
   }
 };
 
-export const ReadFileBaseUrl = '/api/common/file/read';
+export const ReadFileBaseUrl = `${publicRuntimeConfig.basePath}/api/common/file/read`;

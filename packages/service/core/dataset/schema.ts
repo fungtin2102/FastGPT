@@ -12,6 +12,8 @@ import {
   TeamMemberCollectionName
 } from '@fastgpt/global/support/user/team/constant';
 import { PermissionTypeEnum, PermissionTypeMap } from '@fastgpt/global/support/permission/constant';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export const DatasetCollectionName = 'datasets';
 
@@ -49,7 +51,7 @@ const DatasetSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: '/icon/logo.svg'
+    default: `${publicRuntimeConfig.basePath}/icon/logo.svg`
   },
   name: {
     type: String,

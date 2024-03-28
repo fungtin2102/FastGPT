@@ -3,6 +3,9 @@ import type {
   DatasetCollectionItemType,
   DatasetItemType
 } from '@fastgpt/global/core/dataset/type.d';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const basePath = publicRuntimeConfig.basePath;
 
 export const defaultDatasetDetail: DatasetItemType = {
   _id: '',
@@ -12,7 +15,7 @@ export const defaultDatasetDetail: DatasetItemType = {
   tmbId: '',
   updateTime: new Date(),
   type: 'dataset',
-  avatar: '/icon/logo.svg',
+  avatar: `${basePath}/icon/logo.svg`,
   name: '',
   intro: '',
   status: 'active',
@@ -35,7 +38,7 @@ export const defaultCollectionDetail: DatasetCollectionItemType = {
     tmbId: '',
     updateTime: new Date(),
     type: 'dataset',
-    avatar: '/icon/logo.svg',
+    avatar: `${basePath}/icon/logo.svg`,
     name: '',
     intro: '',
     status: 'active',

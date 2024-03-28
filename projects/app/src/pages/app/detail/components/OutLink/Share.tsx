@@ -44,6 +44,8 @@ import { getDocPath } from '@/web/common/system/doc';
 import dynamic from 'next/dynamic';
 import MyMenu from '@/components/MyMenu';
 import { useConfirm } from '@fastgpt/web/hooks/useConfirm';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const SelectUsingWayModal = dynamic(() => import('./SelectUsingWayModal'));
 
@@ -204,7 +206,7 @@ const Share = ({ appId }: { appId: string }) => {
           type={'share'}
           defaultData={editLinkData}
           onCreate={(id) => {
-            const url = `${location.origin}/chat/share?shareId=${id}`;
+            const url = `${location.origin}/${publicRuntimeConfig.basePath}chat/share?shareId=${id}`;
             copyData(url, t('core.app.share.Create link tip'));
             refetchShareChatList();
             setEditLinkData(undefined);

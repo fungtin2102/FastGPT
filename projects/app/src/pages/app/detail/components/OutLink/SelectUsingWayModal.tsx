@@ -10,6 +10,8 @@ import { useCopyData } from '@/web/common/hooks/useCopyData';
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { fileToBase64 } from '@/web/common/file/utils';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 enum UsingWayEnum {
   link = 'link',
@@ -26,18 +28,18 @@ const SelectUsingWayModal = ({ share, onClose }: { share: OutLinkSchema; onClose
     fileType: 'image/*'
   });
   const { feConfigs } = useSystemStore();
-
+  const basePath = publicRuntimeConfig.basePath;
   const VariableTypeList = [
     {
-      title: <Image src={'/imgs/outlink/link.svg'} alt={''} />,
+      title: <Image src={`${basePath}/imgs/outlink/link.svg`} alt={''} />,
       value: UsingWayEnum.link
     },
     {
-      title: <Image src={'/imgs/outlink/iframe.svg'} alt={''} />,
+      title: <Image src={`${basePath}/imgs/outlink/iframe.svg`} alt={''} />,
       value: UsingWayEnum.iframe
     },
     {
-      title: <Image src={'/imgs/outlink/script.svg'} alt={''} />,
+      title: <Image src={`${basePath}/imgs/outlink/script.svg`} alt={''} />,
       value: UsingWayEnum.script
     }
   ];
@@ -73,7 +75,7 @@ const SelectUsingWayModal = ({ share, onClose }: { share: OutLinkSchema; onClose
   });
 
   const baseUrl = feConfigs?.customSharePageDomain || location?.origin;
-  const linkUrl = `${baseUrl}/chat/share?shareId=${share?.shareId}${
+  const linkUrl = `${baseUrl}${basePath}/chat/share?shareId=${share?.shareId}${
     getValues('showHistory') ? '' : '&showHistory=0'
   }`;
 

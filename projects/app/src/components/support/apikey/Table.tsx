@@ -43,6 +43,8 @@ import MyTooltip from '@/components/MyTooltip';
 import { getDocPath } from '@/web/common/system/doc';
 import MyMenu from '@/components/MyMenu';
 import { useConfirm } from '@fastgpt/web/hooks/useConfirm';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 type EditProps = EditApiKeyProps & { _id?: string };
 const defaultEditData: EditProps = {
@@ -80,7 +82,9 @@ const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
   } = useQuery(['getOpenApiKeys', appId], () => getOpenApiKeys({ appId }));
 
   useEffect(() => {
-    setBaseUrl(feConfigs?.customApiDomain || `${location.origin}/api`);
+    setBaseUrl(
+      feConfigs?.customApiDomain || `${location.origin}${publicRuntimeConfig.basePath}/api`
+    );
   }, []);
 
   return (

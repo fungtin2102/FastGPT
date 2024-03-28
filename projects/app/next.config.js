@@ -2,7 +2,22 @@
 const { i18n } = require('./next-i18next.config');
 const path = require('path');
 
+function getBasePath() {
+  return process.env.BASE_PATH || "/";
+}
+
 const nextConfig = {
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    mySecret: 'secret',
+    secondSecret: process.env.SECOND_SECRET, // Pass through env variables
+  },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    basePath: getBasePath(),
+  },
+  assetPrefix: getBasePath(), //加前缀
+  basePath: getBasePath(), //node
   i18n,
   output: 'standalone',
   reactStrictMode: process.env.NODE_ENV === 'development' ? false : true,

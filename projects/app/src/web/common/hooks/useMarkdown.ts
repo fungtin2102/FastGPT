@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export const getMd = async (url: string) => {
-  const response = await fetch(`/docs/${url}`);
+  const response = await fetch(`${publicRuntimeConfig.basePath}/docs/${url}`);
   const textContent = await response.text();
   return textContent;
 };

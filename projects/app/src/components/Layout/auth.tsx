@@ -3,6 +3,8 @@ import { useUserStore } from '@/web/support/user/useUserStore';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'next-i18next';
 import { useToast } from '@fastgpt/web/hooks/useToast';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const unAuthPage: { [key: string]: boolean } = {
   '/': true,
@@ -35,7 +37,7 @@ const Auth = ({ children }: { children: JSX.Element }) => {
       onError(error) {
         console.log('error->', error);
         router.replace(
-          `/login?lastRoute=${encodeURIComponent(location.pathname + location.search)}`
+          `${publicRuntimeConfig.basePath}/login?lastRoute=${encodeURIComponent(location.pathname + location.search)}`
         );
         toast({
           status: 'warning',

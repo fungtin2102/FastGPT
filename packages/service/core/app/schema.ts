@@ -7,6 +7,8 @@ import {
   TeamCollectionName,
   TeamMemberCollectionName
 } from '@fastgpt/global/support/user/team/constant';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export const appCollectionName = 'apps';
 
@@ -36,7 +38,7 @@ const AppSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: '/icon/logo.svg'
+    default: `${publicRuntimeConfig.basePath}/icon/logo.svg`
   },
   intro: {
     type: String,

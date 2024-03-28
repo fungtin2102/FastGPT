@@ -29,6 +29,8 @@ import MyTooltip from '@/components/MyTooltip';
 import MyModal from '@fastgpt/web/components/common/MyModal';
 import { useTranslation } from 'next-i18next';
 import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 type FormType = {
   avatar: string;
@@ -45,7 +47,7 @@ const CreateModal = ({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
   const { isPc, feConfigs } = useSystemStore();
   const { register, setValue, getValues, handleSubmit } = useForm<FormType>({
     defaultValues: {
-      avatar: '/icon/logo.svg',
+      avatar: `${publicRuntimeConfig.basePath}/icon/logo.svg`,
       name: '',
       templateId: appTemplates[0].id
     }

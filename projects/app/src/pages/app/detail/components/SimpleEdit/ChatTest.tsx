@@ -13,6 +13,8 @@ import MyIcon from '@fastgpt/web/components/common/Icon';
 import { getGuideModule } from '@fastgpt/global/core/module/utils';
 import { checkChatSupportSelectFileByModules } from '@/web/core/chat/utils';
 import { AppTypeEnum } from '@fastgpt/global/core/app/constants';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const ChatTest = ({ appId }: { appId: string }) => {
   const { t } = useTranslation();
@@ -40,7 +42,7 @@ const ChatTest = ({ appId }: { appId: string }) => {
 
       // 流请求，获取数据
       const { responseText, responseData } = await streamFetch({
-        url: '/api/core/chat/chatTest',
+        url: `${publicRuntimeConfig.basePath}/api/core/chat/chatTest`,
         data: {
           history,
           prompt: chatList[chatList.length - 2].value,

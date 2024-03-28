@@ -21,9 +21,11 @@ import { PluginTypeEnum } from '@fastgpt/global/core/plugin/constants';
 import { useWorkflowStore } from '@/web/core/workflow/store/workflow';
 import { EditFormType } from './type';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 12);
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export const defaultForm: EditFormType = {
-  avatar: '/icon/logo.svg',
+  avatar: `${publicRuntimeConfig.basePath}/icon/logo.svg`,
   name: '',
   intro: '',
   parentId: null,

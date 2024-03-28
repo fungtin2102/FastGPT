@@ -8,6 +8,8 @@ import { clearToken, getToken } from '@/web/support/user/auth';
 import { TOKEN_ERROR_CODE } from '@fastgpt/global/common/error/errorCode';
 import { TeamErrEnum } from '@fastgpt/global/common/error/code/team';
 import { useSystemStore } from '../system/useSystemStore';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 interface ConfigType {
   headers?: { [key: string]: string };
@@ -101,12 +103,15 @@ function responseError(err: any) {
   // 有报错响应
   if (err?.code in TOKEN_ERROR_CODE) {
     clearToken();
-
+    const basePath = publicRuntimeConfig.basePath;
     if (
-      !(window.location.pathname === '/chat/share' || window.location.pathname === '/chat/team')
+      !(
+        window.location.pathname === `${basePath}/chat/share` ||
+        window.location.pathname === `${basePath}/chat/team`
+      )
     ) {
       window.location.replace(
-        `/login?lastRoute=${encodeURIComponent(location.pathname + location.search)}`
+        `${basePath}/login?lastRoute=${encodeURIComponent(location.pathname + location.search)}`
       );
     }
 
@@ -152,7 +157,7 @@ function request(
 
   return instance
     .request({
-      baseURL: '/api',
+      baseURL: `${publicRuntimeConfig.basePath}/api`,
       url,
       method,
       data: ['POST', 'PUT'].includes(method) ? data : null,

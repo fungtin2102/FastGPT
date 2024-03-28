@@ -3,6 +3,8 @@ const { Schema, model, models } = connectionMongo;
 import { TeamSchema as TeamType } from '@fastgpt/global/support/user/team/type.d';
 import { userCollectionName } from '../../user/schema';
 import { TeamCollectionName } from '@fastgpt/global/support/user/team/constant';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 const TeamSchema = new Schema({
   name: {
@@ -15,7 +17,7 @@ const TeamSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: '/icon/logo.svg'
+    default: `${publicRuntimeConfig.basePath}/icon/logo.svg`
   },
   createTime: {
     type: Date,
